@@ -32,5 +32,6 @@ int main()
         players = atoi(playMode);
     } while (players != 1 && players != 2);
     // display game board
-    char board[10] = "         ";
+    char board[10] = "BBBBBBBBB";
+    printBoard(board);
 }
