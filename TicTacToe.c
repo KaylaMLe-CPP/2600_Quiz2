@@ -88,6 +88,12 @@ int main()
             gameComplete = true;
             break;
         }
+        // at this point in the loop, 9 pieces have been placed, and the board is full
+        // (no more valid moves possible). if no one has won, it's a tie
+        if (i == 4)
+        {
+            break;
+        }
 
         int xCoord2;
         int yCoord2;
@@ -123,5 +129,11 @@ int main()
             gameComplete = true;
             break;
         }
+    }
+
+    // if the max number of moves was reached and nobody won, the game is a tie
+    if (!gameComplete)
+    {
+        printf("It's a tie.");
     }
 }
