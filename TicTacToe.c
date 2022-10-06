@@ -20,6 +20,31 @@ void printBoard(char board[10])
     }
 }
 
+bool checkWin(char board[10], int y, int x)
+{
+    bool win = false;
+
+    // checking if all chars in a column are identical
+    if (board[x] == board[x + 3] && board[x] == board[x + 6])
+    {
+        win = true;
+    } // checking rows
+    else if (board[y * 3] == board[y * 3 + 1] && board[y * 3] == board[y * 3 + 2])
+    {
+        win = true;
+    } // checking upper left to bottom right diagonal ([0, 0] to [2, 2])
+    else if (x == y && board[0] == board[4] && board[0] == board[8])
+    {
+        win = true;
+    } // checking upper right to bottom left diagonal ([2, 0] to [0, 2])
+    else if (x + y == 2 && board[2] == board[4] && board[2] == board[6])
+    {
+        win = true;
+    }
+
+    return win;
+}
+
 int main()
 {
     // prompt for play mode
@@ -32,6 +57,35 @@ int main()
         players = atoi(playMode);
     } while (players != 1 && players != 2);
     // display game board
-    char board[10] = "BBBBBBBBB";
+    char board[10] = "         ";
     printBoard(board);
-}
+    bool gameComplete = false;
+
+    for (int i = 0; i < 5; i++)
+    {
+        int xCoord1;
+        int yCoord1;
+
+        // asks p1 for coords until valid and empty coords are given
+        do
+        {
+            printf("Player 1 move x coord: ");
+            char xCoord[2];
+            gets(xCoord);
+            xCoord1 = atoi(xCoord);
+
+            printf("Player 1 move y coord: ");
+            char yCoord[2];
+            gets(yCoord);
+            yCoord1 = atoi(yCoord);
+        } while (xCoord1 < 0 || xCoord1 > 2 || yCoord1 < 0 || yCoord1 > 2 || board[yCoord1 * 3 + xCoord1] != ' ');
+        // fills in chosen spot
+        board[yCoord1 * 3 + xCoord1] = 'X';
+        printBoard(board);
+        if (checkWin(board, yCoord1, xCoord1))
+        {
+            printf("PLAYER 1 WINS!!\n");
+            gameComplete = true;
+            break;
+        }
+    }
