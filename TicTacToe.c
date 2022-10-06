@@ -88,4 +88,40 @@ int main()
             gameComplete = true;
             break;
         }
+
+        int xCoord2;
+        int yCoord2;
+
+        do
+        {
+            if (players == 2)
+            {
+                printf("Player 2 move x coord: ");
+                char xCoord[2];
+                gets(xCoord);
+                xCoord2 = atoi(xCoord);
+
+                printf("Player 2 move y coord: ");
+                char yCoord[2];
+                gets(yCoord);
+                yCoord2 = atoi(yCoord);
+            }
+            else
+            {
+                srand(time(NULL));
+                xCoord2 = rand() % 3;
+                yCoord2 = rand() % 3;
+            }
+
+        } while (xCoord2 < 0 || xCoord2 > 2 || yCoord2 < 0 || yCoord2 > 2 || board[yCoord2 * 3 + xCoord2] != ' ');
+
+        board[yCoord2 * 3 + xCoord2] = 'O';
+        printBoard(board);
+        if (checkWin(board, yCoord2, xCoord2))
+        {
+            printf("PLAYER 2 WINS!!\n");
+            gameComplete = true;
+            break;
+        }
     }
+}
